@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 19:54:09 by ramroma           #+#    #+#             */
-/*   Updated: 2025/07/31 20:56:19 by ralbliwi         ###   ########.fr       */
+/*   Created: 2025/05/09 15:56:31 by ramroma           #+#    #+#             */
+/*   Updated: 2025/07/31 21:03:13 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-#define PHILO_H
+#include "../philo.h"
 
-# include <pthread.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <sys/time.h>
-
-typedef struct s_philo
+void *task_of_thread (void *test)
 {
-    pthread_mutex_t left_fork;
-    pthread_mutex_t right_fork;
-    pthread_t thread;
-    int index ;
     
-}t_philo;
+}
 
-#endif
+
+int main (int argc , int **argv)
+{
+    if (argc != 5 && argc != 6)
+    {
+        write(2, "wrong number of Args\n", 22);
+        return (1);
+    }
+}
