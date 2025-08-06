@@ -1,9 +1,10 @@
 NAME = philo
 
-SRCS= src/main.c 
+SRCS= src/philo.c src/routine.c src/init.c src/ft_utils.c 
 
 CC = cc
-CFLAGS = -pthread -Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror
+
 
 all: $(NAME)
 

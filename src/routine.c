@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 15:56:31 by ramroma           #+#    #+#             */
-/*   Updated: 2025/05/10 13:53:34 by ramroma          ###   ########.fr       */
+/*   Created: 2025/08/06 18:22:37 by ralbliwi          #+#    #+#             */
+/*   Updated: 2025/08/06 18:41:29 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-void *task_of_thread (void *test)
+#include "../philo.h"
+
+void *start_routine(void *arg)
 {
+    t_philo *philos;
+
+    philos = (t_philo *)arg;
     
-}
-int main (int argc , int **argv)
-{
-    
+    printf("thread id : %d\n", philos->id);
+    return (NULL);
 }
