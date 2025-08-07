@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:56:31 by ramroma           #+#    #+#             */
-/*   Updated: 2025/08/06 18:39:38 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:19:36 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int main (int argc , char **argv)
 {
     t_philo *philos;
     t_data data;
-    
     if (argc != 5 && argc != 6)
     {
         write(2, "wrong number of Args\n", 22);
@@ -25,7 +24,7 @@ int main (int argc , char **argv)
     if (init_data(&data, argv))
         return (1);
     philos = malloc(sizeof(t_philo) * data.num_of_philos);
-    if (philos)
+    if (!philos)
     {
         free(data.forks);
         return (1);
@@ -33,7 +32,6 @@ int main (int argc , char **argv)
     init_philos(&data, philos);
     if (init_threads(philos))
     {
-        free(data.forks);
         free(philos);
         return (1);
     }

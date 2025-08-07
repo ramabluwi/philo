@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:17:17 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/06 16:50:31 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/07 21:13:28 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ long	get_curr_time(void)
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+}
+
+void print_action(t_philo *philo, const char *msg)
+{
+    pthread_mutex_lock(&philo->data->print_mut);
+    printf("%ld %d %s\n", time_stp(philo), philo->id, msg);
+    pthread_mutex_unlock(&philo->data->print_mut);
+}
+
+void	ft_usleep(int ms)
+{
+	long	start = get_curr_time();
+	while (get_curr_time() - start < ms)
+		usleep(500);
 }

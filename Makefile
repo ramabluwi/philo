@@ -5,16 +5,18 @@ SRCS= src/philo.c src/routine.c src/init.c src/ft_utils.c
 CC = cc
 CFLAGS =  -Wall -Wextra -Werror
 
+OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+all: $(NAME) 
 
-$(NAME): $(SRCS)
-	@$(CC) $(CFLAGS) -o $(NAME) $(SRCS)
+$(NAME): $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 clean:
-	@rm -f $(NAME)
+	@rm -f $(OBJS)
 
-fclean:clean
+fclean: clean 
+			@rm -f $(NAME)
 
 re: clean all
 
