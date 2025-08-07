@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:54:09 by ramroma           #+#    #+#             */
-/*   Updated: 2025/08/07 21:16:33 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:51:55 by ramroma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_data
 	pthread_mutex_t	*forks;
     pthread_mutex_t	print_mut;
 	pthread_mutex_t	death_mut;
+	int				death_flag;	
 }					t_data;
 
 typedef struct s_philo
@@ -45,7 +46,7 @@ typedef struct s_philo
 }					t_philo;
 
 void	*start_routine(void *arg);
-void 	*task_of_thread (void *test);
+int	init_mutexes(t_data *data);
 int		init_philos(t_data *data, t_philo *philos);
 long	get_curr_time(void);
 int		ft_atoi(char *n);
@@ -58,5 +59,7 @@ void print_action(t_philo *philo, const char *msg);
 void is_sleeping(t_philo *philo);
 void is_thinking(t_philo *philo);
 void	ft_usleep(int ms);
+void *monitor_routine(void *arg);
+void destroy_all(t_data *data, t_philo *philos);
 
 #endif

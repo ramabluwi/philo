@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:17:17 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/07 21:13:28 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:50:08 by ramroma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,21 @@ void	ft_usleep(int ms)
 	long	start = get_curr_time();
 	while (get_curr_time() - start < ms)
 		usleep(500);
+}
+
+void destroy_all(t_data *data, t_philo *philos)
+{
+    int i = 0;
+
+    while (i < data->num_of_philos)
+    {
+        pthread_mutex_destroy(&data->forks[i]);
+        i++;
+    }
+
+    pthread_mutex_destroy(&data->print_mut);
+    pthread_mutex_destroy(&data->death_mut);
+
+    free(data->forks);
+    free(philos);
 }

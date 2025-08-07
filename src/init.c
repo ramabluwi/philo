@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 21:43:48 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/07 21:16:08 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:42:03 by ramroma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int init_data(t_data *data , char **av)
 		data->forks = malloc (sizeof(pthread_mutex_t) * data->num_of_philos);
 		if (!data->forks)
     			return (1);
+		data->death_flag = 0;
 
 		return (0);
 }
@@ -69,6 +70,7 @@ int init_threads(t_philo *philos)
 {
 	int i;
 	int num = philos[0].data->num_of_philos;
+	pthread_t monitor;
 
 	i = 0;
 	while (i < num)
@@ -77,7 +79,9 @@ int init_threads(t_philo *philos)
 			return (1);
 		i++;
 	}
-
+	if (pthread_create(&monitor, NULL, monitor_routine, philos))
+        return (1);
+	
 	i = 0;
 	while (i < num)
 	{

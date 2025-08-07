@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 15:56:31 by ramroma           #+#    #+#             */
-/*   Updated: 2025/08/07 21:19:36 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:50:33 by ramroma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ int main (int argc , char **argv)
     init_philos(&data, philos);
     if (init_threads(philos))
     {
-        free(philos);
+        destroy_all(&data, philos);
         return (1);
     }
+    destroy_all(&data, philos);
     return (0);
 }

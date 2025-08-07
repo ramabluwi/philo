@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ramroma <ramroma@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:22:37 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/07 21:35:57 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/08 01:44:02 by ramroma          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ void *start_routine(void *arg)
         usleep(1000);
     while (1)
     {
+        pthread_mutex_lock(&philo->data->death_mut);
+        if (philo->data->death_flag)
+        {
+            pthread_mutex_unlock(&philo->data->death_mut);
+            break;
+        }
+        pthread_mutex_unlock(&philo->data->death_mut);
         is_eating(philo);
         is_sleeping(philo);
 		is_thinking(philo);
@@ -83,4 +90,31 @@ void is_sleeping(t_philo *philo)
 void is_thinking(t_philo *philo)
 {
 	print_action(philo, "is thinking");
+}
+
+void *monitor_routine(void *arg)
+{
+    t_philo *philos = (t_philo *)arg;
+    t_data *data = philos[0].data;
+    int i;
+
+    while (1)
+    {
+        i = 0;
+        while (i < data->num_of_philos)
+        {
+            pthread_mutex_lock(&data->death_mut);
+            if (get_curr_time() - philos[i].last_meal > data->time_to_die)
+            {
+                data->death_flag = 1;
+                print_action(&philos[i], "died");
+                pthread_mutex_unlock(&data->death_mut);
+                return NULL;
+            }
+            pthread_mutex_unlock(&data->death_mut);
+            i++;
+        }
+        usleep(1000);
+    }
+    return NULL;
 }
