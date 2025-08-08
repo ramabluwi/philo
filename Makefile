@@ -1,9 +1,9 @@
 NAME = philo
 
-SRCS= src/philo.c src/routine.c src/init.c src/ft_utils.c 
+SRCS= src/philo.c src/routine.c src/init.c src/ft_utils.c src/routine2.c
 
 CC = cc
-CFLAGS =  -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror 
 
 OBJS = $(SRCS:.c=.o)
 
