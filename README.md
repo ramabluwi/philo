@@ -39,7 +39,6 @@ philo/
 │   ├── main.c
 │   ├── init.c
 │   ├── routine.c
-│   ├── monitor.c
 │   ├── utils.c
 │   └── ...
 └── philo_subject.pdf
