@@ -36,7 +36,7 @@ philo/
 ├── Makefile
 ├── philo.h
 ├── src/
-│   ├── main.c
+│   ├── philo.c
 │   ├── init.c
 │   ├── routine.c
 │   ├── utils.c
