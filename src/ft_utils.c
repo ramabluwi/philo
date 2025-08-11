@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:17:17 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/08 19:47:04 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:53:34 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,31 @@ long	get_curr_time(void)
 
 void	print_action(t_philo *philo, const char *msg)
 {
+	if (is_dead(philo->data))
+		return ;
 	pthread_mutex_lock(&philo->data->print_mut);
+	if (is_dead(philo->data))
+	{
+		pthread_mutex_unlock(&philo->data->print_mut);
+		return ;
+	}
 	if (!philo->data->death_flag)
 		printf("%ld %d %s\n", get_curr_time() - philo->data->start_time,
 			philo->id, msg);
 	pthread_mutex_unlock(&philo->data->print_mut);
 }
 
-void	ft_usleep(int ms)
+void	ft_usleep(int ms, t_philo *philo)
 {
 	long	start;
 
 	start = get_curr_time();
 	while (get_curr_time() - start < ms)
+	{
+		if (is_dead(philo->data))
+			return ;
 		usleep(500);
+	}
 }
 
 void	destroy_all(t_data *data, t_philo *philos)

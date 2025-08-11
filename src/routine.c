@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 18:22:37 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/08 20:01:19 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:21:00 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void	*start_routine(void *arg)
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	if (philo->data->num_of_philos == 1)
-	{
-		print_action(philo, "died");
 		return (NULL);
-	}
 	while (1)
 	{
+		if (is_dead(philo->data))
+			return (NULL);
 		is_eating(philo);
 		if (is_dead(philo->data) || (philo->data->must_eat != -1
 				&& philo->meals_eaten >= philo->data->must_eat))
@@ -41,6 +40,8 @@ void	*start_routine(void *arg)
 
 int	take_forks(t_philo *philo)
 {
+	if (is_dead(philo->data))
+		return (1);
 	if (philo->id % 2 != 0)
 	{
 		pthread_mutex_lock(&philo->data->forks[philo->right_fork]);
@@ -75,6 +76,8 @@ int	release_forks(t_philo *philo)
 
 int	is_eating(t_philo *philo)
 {
+	if (is_dead(philo->data))
+		return (1);
 	take_forks(philo);
 	if (is_dead(philo->data))
 	{
@@ -84,7 +87,7 @@ int	is_eating(t_philo *philo)
 	print_action(philo, "is eating");
 	philo->last_meal = get_curr_time();
 	philo->meals_eaten++;
-	ft_usleep(philo->data->time_to_eat);
+	ft_usleep(philo->data->time_to_eat, philo);
 	release_forks(philo);
 	return (0);
 }

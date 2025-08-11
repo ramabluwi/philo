@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 19:50:55 by ralbliwi          #+#    #+#             */
-/*   Updated: 2025/08/08 20:00:57 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/09 13:17:58 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	is_sleeping(t_philo *philo)
 {
+    if (is_dead(philo->data))
+		return ;
 	print_action(philo, "is sleeping");
-	ft_usleep(philo->data->time_to_sleep);
+	ft_usleep(philo->data->time_to_sleep, philo);
 }
 
 void	is_thinking(t_philo *philo)
@@ -29,19 +31,23 @@ static int	check_death_condition(t_philo *philo)
 	long	time_since_last_meal;
 
 	data = philo->data;
-	pthread_mutex_lock(&data->death_mut);
+	if (is_dead(philo->data))
+        return (1);
 	time_since_last_meal = get_curr_time() - philo->last_meal;
 	if (time_since_last_meal > data->time_to_die)
 	{
 		if (data->must_eat == -1 || philo->meals_eaten < data->must_eat)
 		{
-			print_action(philo, "died");
-			data->death_flag = 1;
+	        pthread_mutex_lock(&data->death_mut);
+            data->death_flag = 1;
 			pthread_mutex_unlock(&data->death_mut);
+            pthread_mutex_lock(&philo->data->print_mut);
+            printf("%ld %d died\n", 
+                get_curr_time() - philo->data->start_time , philo->id);
+            pthread_mutex_unlock(&philo->data->print_mut);
 			return (1);
 		}
 	}
-	pthread_mutex_unlock(&data->death_mut);
 	return (0);
 }
 

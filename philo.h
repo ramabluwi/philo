@@ -6,7 +6,7 @@
 /*   By: ralbliwi <ralbliwi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 19:54:09 by ramroma           #+#    #+#             */
-/*   Updated: 2025/08/08 20:07:07 by ralbliwi         ###   ########.fr       */
+/*   Updated: 2025/08/09 12:45:47 by ralbliwi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ long				time_stp(t_philo *philo);
 void				print_action(t_philo *philo, const char *msg);
 void				is_sleeping(t_philo *philo);
 void				is_thinking(t_philo *philo);
-void				ft_usleep(int ms);
+void				ft_usleep(int ms, t_philo *philo);
 void				*monitor_routine(void *arg);
 void				destroy_all(t_data *data, t_philo *philos);
 int					release_forks(t_philo *philo);
