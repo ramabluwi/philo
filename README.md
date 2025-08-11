@@ -108,12 +108,6 @@ Same as above, but simulation stops when all have eaten **7 times**.
 
 ---
 
-## 🚀 Bonus Part (Not in this repo)
-- Uses **processes** instead of threads.
-- Forks managed with **semaphores** instead of mutexes.
-
----
-
 ## 📚 Learning Objectives
 - Understanding **thread creation** (`pthread_create`)
 - Mutex usage (`pthread_mutex_lock`, `pthread_mutex_unlock`)
